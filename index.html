@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Para Zesshi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0724a7 url('images/petalos.png') repeat;
+            background-size: cover;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #333;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .fade {
+            animation: fadeIn 3s ease-in-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .hidden { display: none; }
+        .petals {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 2em;
+        }
+        .music-btn {
+            background: #ffeb3b;
+            border: none;
+            padding: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .final-img {
+            width: 200px;
+            margin-top: 20px;
+        }
+        .reveal-name span {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        .reveal-name.revealed span {
+            opacity: 1;
+        }
+
+        /* Efecto de brillo para las letras */
+        .glow {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #09021d, 0 0 30px #023c58, 0 0 40px #000000, 0 0 50px #0f000f, 0 0 75px #200420;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="petals"></div>
+    <div class="content">
+        <h1 class="fade glow">Hola...</h1>
+        <p class="fade glow" style="animation-delay: 2s;">Desde que te conocí, supe que eras especial</p>
+        <p class="fade glow" style="animation-delay: 4s;">Tu sonrisa siempre alegra mi mundo y 
+        <p class="fade glow" style="animation-delay: 6s;"> en algun momento te hicieron sentir menos yo quisiera mostrarte lo mucho que realmente mereces</p>
+        <div class="reveal-name fade" style="animation-delay: 8s;" id="name">
+            <!-- Zesshi name reveal -->
+        </div>
+        <button class="music-btn" onclick="playMusic()">💛 Reproducir Canción</button>
+        <audio id="song" src="audio/TomaMiMano.mp3"></audio>
+        <p class="fade glow" style="animation-delay: 8s;">¿Quieres ser mi novia...y Futura esposa?</p>
+        <img src="images/osos.jpg" class="final-img fade" style="animation-delay: 10s;">
+        <p class="fade glow" style="animation-delay: 12s;">Con amor, Kiri 💙<br>24 de Abril, 2025</p>
+    </div>
+
+    <script>
+        window.onload = () => {
+            const name = "Zesshi";
+            const container = document.getElementById("name");
+            for (let i = 0; i < name.length; i++) {
+                const span = document.createElement("span");
+                span.textContent = name[i];
+                span.style.transitionDelay = `${i * 0.3}s`;
+                span.classList.add("glow"); // Agregar la clase glow
+                container.appendChild(span);
+            }
+            setTimeout(() => {
+                container.classList.add("revealed");
+            }, 6000);
+        };
+
+        function playMusic() {
+            const song = document.getElementById('song');
+            song.play().catch(error => {
+                console.error("Error al reproducir la canción:", error);
+                alert("No se pudo reproducir la canción. Verifica que el archivo exista y que el navegador permita la reproducción.");
+            });
+        }
+
+        const petalsContainer = document.querySelector('.petals');
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.style.position = 'absolute';
+            petal.style.width = '20px';
+            petal.style.height = '20px';
+            petal.style.backgroundImage = "url('petalos.png')";
+            petal.style.backgroundSize = 'cover';
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animation = `fall ${Math.random() * 5 + 5}s linear infinite`;
+            petalsContainer.appendChild(petal);
+
+            setTimeout(() => petal.remove(), 10000);
+        }
+
+        setInterval(createPetal, 300);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(-100px); }
+                100% { transform: translateY(100vh); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
